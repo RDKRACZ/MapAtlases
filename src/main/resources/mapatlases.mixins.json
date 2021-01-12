@@ -5,7 +5,9 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [],
   "client": [
-    "MapAtlasesHUDMixin"
+    "MapAtlasesHUDMixin",
+    "MapAtlasesLecternBlockEntity",
+    "MapAtlasesLecternBlockEntityRenderer"
   ],
   "injectors": {
     "defaultRequire": 1

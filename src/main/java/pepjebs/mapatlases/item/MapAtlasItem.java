@@ -2,6 +2,9 @@ package pepjebs.mapatlases.item;
 
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.LecternBlock;
+import net.minecraft.block.entity.LecternBlockEntity;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -99,7 +102,13 @@ public class MapAtlasItem extends Item implements ExtendedScreenHandlerFactory {
 
     public ActionResult useOnBlock(ItemUsageContext context) {
         BlockState blockState = context.getWorld().getBlockState(context.getBlockPos());
-        if (blockState.isIn(BlockTags.BANNERS)) {
+        if (blockState.isOf(Blocks.LECTERN)) {
+            return LecternBlock.putBookIfAbsent(
+                    context.getWorld(),
+                    context.getBlockPos(),
+                    blockState,
+                    context.getStack()) ? ActionResult.success(context.getWorld().isClient) : ActionResult.PASS;
+        } else if (blockState.isIn(BlockTags.BANNERS)) {
             if (!context.getWorld().isClient) {
                 MapState mapState =
                         MapAtlasesAccessUtils.getActiveAtlasMapState(context.getWorld(), context.getStack());
